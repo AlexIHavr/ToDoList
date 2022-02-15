@@ -1,0 +1,35 @@
+.row .card-panel {
+  margin: 0;
+  font-size: 1.3rem;
+  padding: 10px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+.toDoItem {
+  position: relative;
+}
+
+.lineThroughText {
+  text-decoration: line-through;
+}
+
+.showToDoItem {
+  animation: showToDoItem 0.5s ease-in-out;
+  -webkit-animation: showToDoItem 0.5s ease-in-out;
+}
+
+@keyframes showToDoItem {
+  from {
+    opacity: 0;
+    left: -100px;
+  }
+
+  to {
+    opacity: 1;
+    left: 0px;
+  }
+}
