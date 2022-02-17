@@ -1,10 +1,6 @@
 import { CREATE_TODO, DONE_TODO, LOAD_TODO, REMOVE_TODO, SET_REMOVED_TODO } from './types';
 
-const initialState = {
-  toDoList: JSON.parse(localStorage.getItem('store'))?.toDoList?.toDoList ?? [],
-};
-
-const toDoListReducer = (state = initialState, action) => {
+const toDoListReducer = (state = [], action) => {
   let toDoList;
 
   switch (action.type) {
