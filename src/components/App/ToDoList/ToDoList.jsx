@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import './toDoList.scss';
 
@@ -7,13 +8,20 @@ const ToDoList = ({ toDoList, doneToDo, removeDoTo }) => {
       <div className={`row toDoItem showToDoItem`} key={id}>
         <div className="col s1 center">
           <a
-            className={`btn-floating waves-effect waves-light ${done ? 'green' : ''} z-depth-1`}
+            className={classNames('btn-floating waves-effect waves-light z-depth-1', {
+              green: done,
+            })}
             onClick={() => doneToDo({ id, done: !done, value })}
           >
             <i className="material-icons">{done ? 'done' : 'info_outline'}</i>
           </a>
         </div>
-        <div className={`col card-panel s10 ${done ? 'green lineThroughText' : 'teal accent-1'}`}>
+        <div
+          className={classNames('col card-panel s10', {
+            'green lineThroughText': done,
+            'teal accent-1': !done,
+          })}
+        >
           {value}
         </div>
         <div className="col s1 center">
