@@ -2,16 +2,24 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import './toDoList.scss';
 
-const ToDoList = ({ toDoList, doneToDo, removeDoTo }) => {
-  return toDoList.map(({ id, done, value }) => {
+const ToDoList = ({ toDoList, doneToDo, removeToDo, setRemovedToDo }) => {
+  return toDoList.map(({ id, done, title, removed }) => {
     return (
-      <div className={`row toDoItem showToDoItem`} key={id}>
+      <div
+        className={classNames('row toDoItem', { showToDoItem: !removed, hideToDoItem: removed })}
+        key={id}
+        onAnimationEnd={() => {
+          if (removed) {
+            removeToDo({ id });
+          }
+        }}
+      >
         <div className="col s1 center">
           <a
             className={classNames('btn-floating waves-effect waves-light z-depth-1', {
               green: done,
             })}
-            onClick={() => doneToDo({ id, done: !done, value })}
+            onClick={() => doneToDo({ id, done: !done })}
           >
             <i className="material-icons">{done ? 'done' : 'info_outline'}</i>
           </a>
@@ -22,12 +30,12 @@ const ToDoList = ({ toDoList, doneToDo, removeDoTo }) => {
             'teal accent-1': !done,
           })}
         >
-          {value}
+          {title}
         </div>
         <div className="col s1 center">
           <a
             className="btn-floating waves-effect waves-light red z-depth-1"
-            onClick={() => removeDoTo({ id, done, value })}
+            onClick={() => setRemovedToDo({ id, removed: true })}
           >
             <i className="material-icons">remove</i>
           </a>
@@ -42,11 +50,13 @@ ToDoList.propTypes = {
     PropTypes.exact({
       id: PropTypes.string.isRequired,
       done: PropTypes.bool.isRequired,
-      value: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      removed: PropTypes.bool.isRequired,
     })
   ).isRequired,
   doneToDo: PropTypes.func.isRequired,
-  removeDoTo: PropTypes.func.isRequired,
+  removeToDo: PropTypes.func.isRequired,
+  setRemovedToDo: PropTypes.func.isRequired,
 };
 
 export default ToDoList;

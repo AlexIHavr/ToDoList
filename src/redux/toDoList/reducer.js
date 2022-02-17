@@ -1,7 +1,7 @@
-import { CREATE_TODO, DONE_TODO, LOAD_TODO, REMOVE_TODO } from './types';
+import { CREATE_TODO, DONE_TODO, LOAD_TODO, REMOVE_TODO, SET_REMOVED_TODO } from './types';
 
 const initialState = {
-  toDoList: [],
+  toDoList: JSON.parse(localStorage.getItem('store'))?.toDoList?.toDoList ?? [],
 };
 
 const toDoListReducer = (state = initialState, action) => {
@@ -20,7 +20,13 @@ const toDoListReducer = (state = initialState, action) => {
       );
       return { ...state, toDoList };
     case LOAD_TODO:
-      return { ...state, toDoList: [...state.toDoList, ...action.payload] };
+      toDoList = [...state.toDoList, ...action.payload];
+      return { ...state, toDoList };
+    case SET_REMOVED_TODO:
+      toDoList = state.toDoList.map((toDo) =>
+        toDo.id === action.payload.id ? { ...toDo, removed: action.payload.removed } : { ...toDo }
+      );
+      return { ...state, toDoList };
     default:
       return state;
   }

@@ -1,27 +1,35 @@
-import { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { v4 } from 'uuid';
 
-const AddToDo = ({ createDoTo }) => {
+const AddToDo = ({ createToDo }) => {
   const [toDoValue, setToDoValue] = useState('');
 
-  const createNewToDo = () => {
+  const createNewToDo = useCallback(() => {
     if (toDoValue.trim()) {
-      createDoTo({
+      createToDo({
         id: v4(),
         done: false,
-        value: toDoValue,
+        title: toDoValue,
+        removed: false,
       });
       setToDoValue('');
     }
-  };
+  }, [toDoValue]);
+
+  const changeToDoValue = useCallback(
+    (e) => {
+      setToDoValue(e.target.value);
+    },
+    [setToDoValue]
+  );
 
   return (
     <div className="row">
       <div className="col s1 center">
         <a
           className="btn-floating waves-effect waves-light green z-depth-1"
-          onClick={() => createNewToDo()}
+          onClick={createNewToDo}
         >
           <i className="material-icons">add</i>
         </a>
@@ -29,7 +37,7 @@ const AddToDo = ({ createDoTo }) => {
       <div className="col input-field s11">
         <textarea
           className="materialize-textarea"
-          onChange={(e) => setToDoValue(e.target.value)}
+          onChange={changeToDoValue}
           placeholder="Add ToDo"
           value={toDoValue}
         ></textarea>
@@ -39,7 +47,7 @@ const AddToDo = ({ createDoTo }) => {
 };
 
 AddToDo.propTypes = {
-  createDoTo: PropTypes.func.isRequired,
+  createToDo: PropTypes.func.isRequired,
 };
 
-export default AddToDo;
+export default React.memo(AddToDo);

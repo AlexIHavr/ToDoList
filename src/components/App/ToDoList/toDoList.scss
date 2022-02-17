@@ -22,6 +22,11 @@
   -webkit-animation: showToDoItem 0.5s ease-in-out;
 }
 
+.hideToDoItem {
+  animation: hideToDoItem 0.5s ease-in-out;
+  -webkit-animation: hideToDoItem 0.5s ease-in-out;
+}
+
 @keyframes showToDoItem {
   from {
     opacity: 0;
@@ -31,5 +36,17 @@
   to {
     opacity: 1;
     left: 0px;
+  }
+}
+
+@keyframes hideToDoItem {
+  from {
+    opacity: 1;
+    left: 0px;
+  }
+
+  to {
+    opacity: 0;
+    left: -100px;
   }
 }
