@@ -1,4 +1,4 @@
-import { CREATE_TODO, DONE_TODO, LOAD_TODO, REMOVE_TODO, SET_REMOVED_TODO } from './types';
+import { CREATE_TODO, DONE_TODO, LOAD_TODO, REMOVE_TODO } from './types';
 
 const toDoListReducer = (state = [], action) => {
   let toDoList;
@@ -17,11 +17,6 @@ const toDoListReducer = (state = [], action) => {
       return { ...state, toDoList };
     case LOAD_TODO:
       toDoList = [...state.toDoList, ...action.payload];
-      return { ...state, toDoList };
-    case SET_REMOVED_TODO:
-      toDoList = state.toDoList.map((toDo) =>
-        toDo.id === action.payload.id ? { ...toDo, removed: action.payload.removed } : { ...toDo }
-      );
       return { ...state, toDoList };
     default:
       return state;

@@ -1,15 +1,21 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 import './toDoList.scss';
 
-const ToDoList = ({ toDoList, doneToDo, removeToDo, setRemovedToDo }) => {
-  return toDoList.map(({ id, done, title, removed }) => {
+const ToDoList = ({ toDoList, doneToDo, removeToDo }) => {
+  const [removedToDo, setRemovedToDo] = useState(null);
+
+  return toDoList.map(({ id, done, title }) => {
     return (
       <div
-        className={classNames('row toDoItem', { showToDoItem: !removed, hideToDoItem: removed })}
+        className={classNames('row toDoItem', {
+          showToDoItem: id !== removedToDo,
+          hideToDoItem: id === removedToDo,
+        })}
         key={id}
         onAnimationEnd={() => {
-          if (removed) {
+          if (id === removedToDo) {
             removeToDo({ id });
           }
         }}
@@ -35,7 +41,7 @@ const ToDoList = ({ toDoList, doneToDo, removeToDo, setRemovedToDo }) => {
         <div className="col s1 center">
           <a
             className="btn-floating waves-effect waves-light red z-depth-1"
-            onClick={() => setRemovedToDo({ id, removed: true })}
+            onClick={() => setRemovedToDo(id)}
           >
             <i className="material-icons">remove</i>
           </a>
