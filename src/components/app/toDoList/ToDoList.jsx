@@ -4,18 +4,20 @@ import { useState } from 'react';
 import './toDoList.scss';
 
 const ToDoList = ({ toDoList, doneToDo, removeToDo }) => {
-  const [removedToDo, setRemovedToDo] = useState(null);
+  const [removedToDos, setRemovedToDos] = useState([]);
 
   return toDoList.map(({ id, done, title }) => {
+    const isRemovedToDo = removedToDos.includes(id);
     return (
       <div
         className={classNames('row toDoItem', {
-          showToDoItem: id !== removedToDo,
-          hideToDoItem: id === removedToDo,
+          showToDoItem: !isRemovedToDo,
+          hideToDoItem: isRemovedToDo,
         })}
         key={id}
         onAnimationEnd={() => {
-          if (id === removedToDo) {
+          if (isRemovedToDo) {
+            setRemovedToDos(removedToDos.filter((toDo) => toDo !== id));
             removeToDo({ id });
           }
         }}
@@ -41,7 +43,7 @@ const ToDoList = ({ toDoList, doneToDo, removeToDo }) => {
         <div className="col s1 center">
           <a
             className="btn-floating waves-effect waves-light red z-depth-1"
-            onClick={() => setRemovedToDo(id)}
+            onClick={() => setRemovedToDos([...removedToDos, id])}
           >
             <i className="material-icons">remove</i>
           </a>
