@@ -62,7 +62,6 @@ ToDoList.propTypes = {
   ).isRequired,
   doneToDo: PropTypes.func.isRequired,
   removeToDo: PropTypes.func.isRequired,
-  setRemovedToDo: PropTypes.func.isRequired,
 };
 
 export default ToDoList;

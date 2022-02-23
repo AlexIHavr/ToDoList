@@ -7,7 +7,7 @@ import 'materialize-css/dist/css/materialize.min.css';
 import 'material-icons/iconfont/material-icons.css';
 
 import './index.scss';
-import App from './components/App/App';
+import App from './components/app/App';
 import store from './redux/store';
 
 ReactDOM.render(
